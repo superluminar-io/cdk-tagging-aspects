@@ -22,14 +22,10 @@ export class FilteringTagAspect implements IAspect {
     if (!this.filter.matches(node)) return;
     if (!CfnResource.isCfnResource(node)) return;
     const cfn = node as CfnResource;
-    if (TagManager.isTaggable(cfn)) {
+    const tagManager = TagManager.of(cfn);
+    if (tagManager) {
       for (const [key, value] of Object.entries(this.tags)) {
-        cfn.tags.setTag(key, value);
-      }
-    } else {
-      const tagEntries = Object.entries(this.tags).map(([k, v]) => ({ Key: k, Value: v }));
-      if (tagEntries.length > 0) {
-        cfn.addPropertyOverride('Tags', tagEntries);
+        tagManager.setTag(key, value);
       }
     }
   }

@@ -1,5 +1,8 @@
 import { App, Stack, CfnResource } from 'aws-cdk-lib';
 import { Aspects } from 'aws-cdk-lib';
+import { CfnAgent } from 'aws-cdk-lib/aws-bedrock';
+import { CfnModel } from 'aws-cdk-lib/aws-sagemaker';
+import { CfnFlywheel } from 'aws-cdk-lib/aws-comprehend';
 import { Template, Match } from 'aws-cdk-lib/assertions';
 import { AwsAiWorkloadTagAspect } from '../src/aws-ai-workload-tag-aspect';
 
@@ -10,18 +13,18 @@ function makeStack(): Stack {
 describe('AwsAiWorkloadTagAspect', () => {
   test('tags AWS::Bedrock::Agent resources', () => {
     const stack = makeStack();
-    new CfnResource(stack, 'BedrockAgent', { type: 'AWS::Bedrock::Agent', properties: {} });
+    new CfnAgent(stack, 'BedrockAgent', { agentName: 'test-agent' });
 
     Aspects.of(stack).add(new AwsAiWorkloadTagAspect({ 'partner:funded': 'true' }));
 
     Template.fromStack(stack).hasResourceProperties('AWS::Bedrock::Agent', {
-      Tags: Match.arrayWith([{ Key: 'partner:funded', Value: 'true' }]),
+      Tags: Match.objectLike({ 'partner:funded': 'true' }),
     });
   });
 
   test('tags AWS::SageMaker::Model resources', () => {
     const stack = makeStack();
-    new CfnResource(stack, 'SageMakerModel', { type: 'AWS::SageMaker::Model', properties: {} });
+    new CfnModel(stack, 'SageMakerModel', {});
 
     Aspects.of(stack).add(new AwsAiWorkloadTagAspect({ 'partner:funded': 'true' }));
 
@@ -30,16 +33,17 @@ describe('AwsAiWorkloadTagAspect', () => {
     });
   });
 
-  test('tags AWS::Comprehend::DocumentClassifier resources', () => {
+  test('tags AWS::Comprehend::Flywheel resources', () => {
     const stack = makeStack();
-    new CfnResource(stack, 'Comprehend', {
-      type: 'AWS::Comprehend::DocumentClassifier',
-      properties: {},
+    new CfnFlywheel(stack, 'ComprehendFlywheel', {
+      flywheelName: 'test-flywheel',
+      dataAccessRoleArn: 'arn:aws:iam::123456789012:role/test-role',
+      dataLakeS3Uri: 's3://test-bucket/data',
     });
 
     Aspects.of(stack).add(new AwsAiWorkloadTagAspect({ 'partner:funded': 'true' }));
 
-    Template.fromStack(stack).hasResourceProperties('AWS::Comprehend::DocumentClassifier', {
+    Template.fromStack(stack).hasResourceProperties('AWS::Comprehend::Flywheel', {
       Tags: Match.arrayWith([{ Key: 'partner:funded', Value: 'true' }]),
     });
   });
