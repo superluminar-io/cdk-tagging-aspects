@@ -6,7 +6,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   authorOrganization: true,
   cdkVersion: '2.160.0',
   defaultReleaseBranch: 'main',
-  jsiiVersion: '~5.7.0',
+  jsiiVersion: '~5.9.0',
   name: 'cdk-tagging-aspects',
   projenrcTs: true,
   repositoryUrl: 'https://github.com/superluminar-io/cdk-tagging-aspects.git',
