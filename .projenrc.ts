@@ -3,6 +3,7 @@ import { awscdk } from 'projen';
 const project = new awscdk.AwsCdkConstructLibrary({
   author: 'superluminar GmbH',
   authorAddress: 'info@superluminar.io',
+  authorOrganization: true,
   cdkVersion: '2.0.0',
   defaultReleaseBranch: 'main',
   jsiiVersion: '~5.7.0',
@@ -31,5 +32,8 @@ const project = new awscdk.AwsCdkConstructLibrary({
     moduleName: 'github.com/superluminar-io/cdk-tagging-aspects-go',
   },
 });
+
+project.addPackageIgnore('/docs/');
+project.gitignore.addPatterns('package-lock.json');
 
 project.synth();

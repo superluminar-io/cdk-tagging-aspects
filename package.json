@@ -36,7 +36,7 @@
   "author": {
     "name": "superluminar GmbH",
     "email": "info@superluminar.io",
-    "organization": false
+    "organization": true
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^2",
