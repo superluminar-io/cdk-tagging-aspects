@@ -10,6 +10,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   name: '@superluminar-io/cdk-tagging-aspects',
   npmAccess: javascript.NpmAccess.PUBLIC,
   npmProvenance: true,
+  npmTrustedPublishing: true,
   packageManager: javascript.NodePackageManager.YARN_CLASSIC,
   projenrcTs: true,
   repositoryUrl: 'https://github.com/superluminar-io/cdk-tagging-aspects.git',

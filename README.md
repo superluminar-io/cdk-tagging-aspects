@@ -2,32 +2,10 @@
 
 CDK aspects for applying tags to resources matching a custom filter. Ships a general-purpose `FilteringTagAspect` and a ready-made `AwsAiWorkloadTagAspect` for AWS partner AI workload compliance tagging.
 
-Supports all CDK-supported languages via JSII: TypeScript, Python, Java, Go, .NET.
-
 ## Installation
 
-**TypeScript / JavaScript**
 ```sh
 npm install @superluminar-io/cdk-tagging-aspects
-```
-
-**Python**
-```sh
-pip install cdk-tagging-aspects
-```
-
-**Java** (Maven)
-```xml
-<dependency>
-  <groupId>io.superluminar</groupId>
-  <artifactId>cdk-tagging-aspects</artifactId>
-  <version>VERSION</version>
-</dependency>
-```
-
-**Go**
-```sh
-go get github.com/superluminar-io/cdk-tagging-aspects-go
 ```
 
 ## Usage
@@ -36,10 +14,8 @@ go get github.com/superluminar-io/cdk-tagging-aspects-go
 
 Tags all resources belonging to Amazon SageMaker, Amazon Bedrock, Amazon Bedrock AgentCore, and Amazon Comprehend. Use this to meet AWS partner funded-workload tagging requirements.
 
-**TypeScript**
 ```typescript
-import { App } from 'aws-cdk-lib';
-import { Aspects } from 'aws-cdk-lib';
+import { App, Aspects } from 'aws-cdk-lib';
 import { AwsAiWorkloadTagAspect } from '@superluminar-io/cdk-tagging-aspects';
 
 const app = new App();
@@ -49,20 +25,6 @@ Aspects.of(app).add(new AwsAiWorkloadTagAspect({
   'partner:funded': 'true',
   'project': 'my-ai-app',
 }));
-```
-
-**Python**
-```python
-from aws_cdk import App, Aspects
-from cdk_tagging_aspects import AwsAiWorkloadTagAspect
-
-app = App()
-# ... define your stacks ...
-
-Aspects.of(app).add(AwsAiWorkloadTagAspect({
-    "partner:funded": "true",
-    "project": "my-ai-app",
-}))
 ```
 
 ### Custom filter with FilteringTagAspect
