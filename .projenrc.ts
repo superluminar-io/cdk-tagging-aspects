@@ -16,24 +16,11 @@ const project = new awscdk.AwsCdkConstructLibrary({
   description: 'CDK aspects for applying tags to resources matching a custom filter',
   license: 'MIT',
   keywords: ['cdk', 'aws', 'tagging', 'aspects', 'compliance'],
-  publishToPypi: {
-    distName: 'cdk-tagging-aspects',
-    module: 'cdk_tagging_aspects',
-  },
-  publishToMaven: {
-    mavenGroupId: 'io.superluminar',
-    javaPackage: 'io.superluminar.cdktaggingaspects',
-    mavenArtifactId: 'cdk-tagging-aspects',
-  },
-  publishToNuget: {
-    dotNetNamespace: 'Superluminar.CdkTaggingAspects',
-    packageId: 'Superluminar.CdkTaggingAspects',
-  },
-  publishToGo: {
-    gitUserName: 'superluminar-io',
-    gitUserEmail: 'info@superluminar.io',
-    moduleName: 'github.com/superluminar-io/cdk-tagging-aspects-go',
-  },
+  // Non-npm publishing targets intentionally omitted until registry accounts are set up.
+  // To re-add PyPI:   publishToPypi: { distName: 'cdk-tagging-aspects', module: 'cdk_tagging_aspects' }
+  // To re-add Maven:  publishToMaven: { mavenGroupId: 'io.superluminar', javaPackage: 'io.superluminar.cdktaggingaspects', mavenArtifactId: 'cdk-tagging-aspects' }
+  // To re-add NuGet:  publishToNuget: { dotNetNamespace: 'Superluminar.CdkTaggingAspects', packageId: 'Superluminar.CdkTaggingAspects' }
+  // To re-add Go:     publishToGo: { gitUserName: 'superluminar-io', gitUserEmail: 'info@superluminar.io', moduleName: 'github.com/superluminar-io/cdk-tagging-aspects-go' }
 });
 
 project.addPackageIgnore('/docs/');
