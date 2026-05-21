@@ -17,6 +17,7 @@ describe('AwsAiWorkloadTagAspect', () => {
 
     Aspects.of(stack).add(new AwsAiWorkloadTagAspect({ 'partner:funded': 'true' }));
 
+    // Bedrock implements ITaggableV2: CDK renders tags as a key/value map, not the CloudFormation array format
     Template.fromStack(stack).hasResourceProperties('AWS::Bedrock::Agent', {
       Tags: Match.objectLike({ 'partner:funded': 'true' }),
     });
