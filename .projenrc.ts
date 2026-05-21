@@ -1,4 +1,4 @@
-import { awscdk } from 'projen';
+import { awscdk, javascript } from 'projen';
 
 const project = new awscdk.AwsCdkConstructLibrary({
   author: 'superluminar GmbH',
@@ -8,6 +8,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   defaultReleaseBranch: 'main',
   jsiiVersion: '~5.9.0',
   name: '@superluminar-io/cdk-tagging-aspects',
+  packageManager: javascript.NodePackageManager.YARN_CLASSIC,
   projenrcTs: true,
   repositoryUrl: 'https://github.com/superluminar-io/cdk-tagging-aspects.git',
   description: 'CDK aspects for applying tags to resources matching a custom filter',

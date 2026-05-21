@@ -73,6 +73,13 @@
     "compliance",
     "tagging"
   ],
+  "devEngines": {
+    "packageManager": {
+      "name": "yarn",
+      "version": "1.22.22",
+      "onFail": "ignore"
+    }
+  },
   "main": "lib/index.js",
   "license": "MIT",
   "version": "0.0.0",

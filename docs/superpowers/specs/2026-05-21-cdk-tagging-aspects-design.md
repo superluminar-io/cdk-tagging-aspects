@@ -42,7 +42,7 @@ class AwsAiWorkloadTagAspect extends FilteringTagAspect {
 
 ### How `visit` works
 
-CDK invokes `visit` on every node in the construct tree automatically — no manual recursion needed. `visit` calls `filter.matches(node)` and, if `true`, applies each tag via `cdk.Tags.of(node).add(key, value)`.
+CDK invokes `visit` on every node in the construct tree automatically — no manual recursion needed. `visit` calls `filter.matches(node)` and, if `true` and the node is a `CfnResource`, applies each tag via `TagManager.of(node).setTag(key, value)`. Using `TagManager.of()` (rather than `TagManager.isTaggable()`) handles both `ITaggable` and `ITaggableV2` resources — Bedrock implements `ITaggableV2`.
 
 ### `AwsAiWorkloadTagAspect` filter
 
@@ -81,5 +81,5 @@ Jest unit tests (JSII default):
 
 - JSII TypeScript project
 - `jsii-pacmak` generates Python, Java, Go, .NET packages
-- npm package name: `cdk-tagging-aspects`
+- npm package name: `@superluminar-io/cdk-tagging-aspects`
 - GitHub Actions: run tests on PR, publish to npm (and other registries) on tag push

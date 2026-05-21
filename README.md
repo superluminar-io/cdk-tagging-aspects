@@ -1,4 +1,4 @@
-# cdk-tagging-aspects
+# @superluminar-io/cdk-tagging-aspects
 
 CDK aspects for applying tags to resources matching a custom filter. Ships a general-purpose `FilteringTagAspect` and a ready-made `AwsAiWorkloadTagAspect` for AWS partner AI workload compliance tagging.
 
@@ -8,7 +8,7 @@ Supports all CDK-supported languages via JSII: TypeScript, Python, Java, Go, .NE
 
 **TypeScript / JavaScript**
 ```sh
-npm install cdk-tagging-aspects
+npm install @superluminar-io/cdk-tagging-aspects
 ```
 
 **Python**
@@ -40,7 +40,7 @@ Tags all resources belonging to Amazon SageMaker, Amazon Bedrock, Amazon Bedrock
 ```typescript
 import { App } from 'aws-cdk-lib';
 import { Aspects } from 'aws-cdk-lib';
-import { AwsAiWorkloadTagAspect } from 'cdk-tagging-aspects';
+import { AwsAiWorkloadTagAspect } from '@superluminar-io/cdk-tagging-aspects';
 
 const app = new App();
 // ... define your stacks ...
@@ -72,7 +72,7 @@ Apply tags only to resources matching your own criteria:
 ```typescript
 import { CfnResource } from 'aws-cdk-lib';
 import { Aspects } from 'aws-cdk-lib';
-import { FilteringTagAspect, IResourceFilter } from 'cdk-tagging-aspects';
+import { FilteringTagAspect, IResourceFilter } from '@superluminar-io/cdk-tagging-aspects';
 import { IConstruct } from 'constructs';
 
 class MyFilter implements IResourceFilter {
