@@ -2,6 +2,10 @@ import { IAspect, CfnResource, TagManager } from 'aws-cdk-lib';
 import { IConstruct } from 'constructs';
 
 export interface IResourceFilter {
+  /**
+   * Called for every node in the construct tree, including non-CfnResource nodes.
+   * Implementations should check node type before accessing CfnResource-specific APIs.
+   */
   matches(node: IConstruct): boolean;
 }
 

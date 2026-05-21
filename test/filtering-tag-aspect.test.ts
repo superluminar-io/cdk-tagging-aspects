@@ -1,4 +1,4 @@
-import { App, Stack } from 'aws-cdk-lib';
+import { App, Stack, CfnResource } from 'aws-cdk-lib';
 import { Aspects } from 'aws-cdk-lib';
 import { CfnBucket } from 'aws-cdk-lib/aws-s3';
 import { Template, Match } from 'aws-cdk-lib/assertions';
@@ -35,6 +35,19 @@ describe('FilteringTagAspect', () => {
 
     const resources = Template.fromStack(stack).findResources('AWS::S3::Bucket');
     expect(Object.values(resources)[0].Properties?.Tags).toBeUndefined();
+  });
+
+  test('does not crash when filter matches a non-taggable CfnResource', () => {
+    const app = new App();
+    const stack = new Stack(app, 'Stack');
+    new CfnResource(stack, 'Handle', {
+      type: 'AWS::CloudFormation::WaitConditionHandle',
+      properties: {},
+    });
+
+    Aspects.of(stack).add(new FilteringTagAspect({ env: 'prod' }, new AlwaysMatch()));
+
+    expect(() => Template.fromStack(stack)).not.toThrow();
   });
 
   test('applies multiple tags when filter matches', () => {
