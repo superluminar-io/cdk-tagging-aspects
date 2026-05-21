@@ -1,5 +1,5 @@
 {
-  "name": "cdk-tagging-aspects",
+  "name": "@superluminar-io/cdk-tagging-aspects",
   "description": "CDK aspects for applying tags to resources matching a custom filter",
   "repository": {
     "type": "git",
@@ -75,9 +75,6 @@
   ],
   "main": "lib/index.js",
   "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
   "version": "0.0.0",
   "jest": {
     "coverageProvider": "v8",

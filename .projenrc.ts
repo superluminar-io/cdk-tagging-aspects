@@ -7,7 +7,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   cdkVersion: '2.160.0',
   defaultReleaseBranch: 'main',
   jsiiVersion: '~5.9.0',
-  name: 'cdk-tagging-aspects',
+  name: '@superluminar-io/cdk-tagging-aspects',
   projenrcTs: true,
   repositoryUrl: 'https://github.com/superluminar-io/cdk-tagging-aspects.git',
   description: 'CDK aspects for applying tags to resources matching a custom filter',
