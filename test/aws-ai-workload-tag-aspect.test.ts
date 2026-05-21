@@ -1,9 +1,8 @@
-import { App, Stack, CfnResource } from 'aws-cdk-lib';
-import { Aspects } from 'aws-cdk-lib';
-import { CfnAgent } from 'aws-cdk-lib/aws-bedrock';
-import { CfnModel } from 'aws-cdk-lib/aws-sagemaker';
-import { CfnFlywheel } from 'aws-cdk-lib/aws-comprehend';
+import { App, Stack, CfnResource, Aspects } from 'aws-cdk-lib';
 import { Template, Match } from 'aws-cdk-lib/assertions';
+import { CfnAgent } from 'aws-cdk-lib/aws-bedrock';
+import { CfnFlywheel } from 'aws-cdk-lib/aws-comprehend';
+import { CfnModel } from 'aws-cdk-lib/aws-sagemaker';
 import { AwsAiWorkloadTagAspect } from '../src/aws-ai-workload-tag-aspect';
 
 function makeStack(): Stack {

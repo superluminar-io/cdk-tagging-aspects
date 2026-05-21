@@ -4,23 +4,23 @@
 
 ## Classes <a name="Classes" id="Classes"></a>
 
-### AwsAiWorkloadTagAspect <a name="AwsAiWorkloadTagAspect" id="cdk-tagging-aspects.AwsAiWorkloadTagAspect"></a>
+### AwsAiWorkloadTagAspect <a name="AwsAiWorkloadTagAspect" id="@superluminar-io/cdk-tagging-aspects.AwsAiWorkloadTagAspect"></a>
 
-#### Initializers <a name="Initializers" id="cdk-tagging-aspects.AwsAiWorkloadTagAspect.Initializer"></a>
+#### Initializers <a name="Initializers" id="@superluminar-io/cdk-tagging-aspects.AwsAiWorkloadTagAspect.Initializer"></a>
 
 ```typescript
-import { AwsAiWorkloadTagAspect } from 'cdk-tagging-aspects'
+import { AwsAiWorkloadTagAspect } from '@superluminar-io/cdk-tagging-aspects'
 
 new AwsAiWorkloadTagAspect(tags: {[ key: string ]: string})
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-tagging-aspects.AwsAiWorkloadTagAspect.Initializer.parameter.tags">tags</a></code> | <code>{[ key: string ]: string}</code> | *No description.* |
+| <code><a href="#@superluminar-io/cdk-tagging-aspects.AwsAiWorkloadTagAspect.Initializer.parameter.tags">tags</a></code> | <code>{[ key: string ]: string}</code> | *No description.* |
 
 ---
 
-##### `tags`<sup>Required</sup> <a name="tags" id="cdk-tagging-aspects.AwsAiWorkloadTagAspect.Initializer.parameter.tags"></a>
+##### `tags`<sup>Required</sup> <a name="tags" id="@superluminar-io/cdk-tagging-aspects.AwsAiWorkloadTagAspect.Initializer.parameter.tags"></a>
 
 - *Type:* {[ key: string ]: string}
 
@@ -30,11 +30,11 @@ new AwsAiWorkloadTagAspect(tags: {[ key: string ]: string})
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-tagging-aspects.AwsAiWorkloadTagAspect.visit">visit</a></code> | All aspects can visit an IConstruct. |
+| <code><a href="#@superluminar-io/cdk-tagging-aspects.AwsAiWorkloadTagAspect.visit">visit</a></code> | All aspects can visit an IConstruct. |
 
 ---
 
-##### `visit` <a name="visit" id="cdk-tagging-aspects.AwsAiWorkloadTagAspect.visit"></a>
+##### `visit` <a name="visit" id="@superluminar-io/cdk-tagging-aspects.AwsAiWorkloadTagAspect.visit"></a>
 
 ```typescript
 public visit(node: IConstruct): void
@@ -42,7 +42,7 @@ public visit(node: IConstruct): void
 
 All aspects can visit an IConstruct.
 
-###### `node`<sup>Required</sup> <a name="node" id="cdk-tagging-aspects.AwsAiWorkloadTagAspect.visit.parameter.node"></a>
+###### `node`<sup>Required</sup> <a name="node" id="@superluminar-io/cdk-tagging-aspects.AwsAiWorkloadTagAspect.visit.parameter.node"></a>
 
 - *Type:* constructs.IConstruct
 
@@ -51,34 +51,34 @@ All aspects can visit an IConstruct.
 
 
 
-### FilteringTagAspect <a name="FilteringTagAspect" id="cdk-tagging-aspects.FilteringTagAspect"></a>
+### FilteringTagAspect <a name="FilteringTagAspect" id="@superluminar-io/cdk-tagging-aspects.FilteringTagAspect"></a>
 
 - *Implements:* aws-cdk-lib.IAspect
 
-#### Initializers <a name="Initializers" id="cdk-tagging-aspects.FilteringTagAspect.Initializer"></a>
+#### Initializers <a name="Initializers" id="@superluminar-io/cdk-tagging-aspects.FilteringTagAspect.Initializer"></a>
 
 ```typescript
-import { FilteringTagAspect } from 'cdk-tagging-aspects'
+import { FilteringTagAspect } from '@superluminar-io/cdk-tagging-aspects'
 
 new FilteringTagAspect(tags: {[ key: string ]: string}, filter: IResourceFilter)
 ```
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-tagging-aspects.FilteringTagAspect.Initializer.parameter.tags">tags</a></code> | <code>{[ key: string ]: string}</code> | *No description.* |
-| <code><a href="#cdk-tagging-aspects.FilteringTagAspect.Initializer.parameter.filter">filter</a></code> | <code><a href="#cdk-tagging-aspects.IResourceFilter">IResourceFilter</a></code> | *No description.* |
+| <code><a href="#@superluminar-io/cdk-tagging-aspects.FilteringTagAspect.Initializer.parameter.tags">tags</a></code> | <code>{[ key: string ]: string}</code> | *No description.* |
+| <code><a href="#@superluminar-io/cdk-tagging-aspects.FilteringTagAspect.Initializer.parameter.filter">filter</a></code> | <code><a href="#@superluminar-io/cdk-tagging-aspects.IResourceFilter">IResourceFilter</a></code> | *No description.* |
 
 ---
 
-##### `tags`<sup>Required</sup> <a name="tags" id="cdk-tagging-aspects.FilteringTagAspect.Initializer.parameter.tags"></a>
+##### `tags`<sup>Required</sup> <a name="tags" id="@superluminar-io/cdk-tagging-aspects.FilteringTagAspect.Initializer.parameter.tags"></a>
 
 - *Type:* {[ key: string ]: string}
 
 ---
 
-##### `filter`<sup>Required</sup> <a name="filter" id="cdk-tagging-aspects.FilteringTagAspect.Initializer.parameter.filter"></a>
+##### `filter`<sup>Required</sup> <a name="filter" id="@superluminar-io/cdk-tagging-aspects.FilteringTagAspect.Initializer.parameter.filter"></a>
 
-- *Type:* <a href="#cdk-tagging-aspects.IResourceFilter">IResourceFilter</a>
+- *Type:* <a href="#@superluminar-io/cdk-tagging-aspects.IResourceFilter">IResourceFilter</a>
 
 ---
 
@@ -86,11 +86,11 @@ new FilteringTagAspect(tags: {[ key: string ]: string}, filter: IResourceFilter)
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-tagging-aspects.FilteringTagAspect.visit">visit</a></code> | All aspects can visit an IConstruct. |
+| <code><a href="#@superluminar-io/cdk-tagging-aspects.FilteringTagAspect.visit">visit</a></code> | All aspects can visit an IConstruct. |
 
 ---
 
-##### `visit` <a name="visit" id="cdk-tagging-aspects.FilteringTagAspect.visit"></a>
+##### `visit` <a name="visit" id="@superluminar-io/cdk-tagging-aspects.FilteringTagAspect.visit"></a>
 
 ```typescript
 public visit(node: IConstruct): void
@@ -98,7 +98,7 @@ public visit(node: IConstruct): void
 
 All aspects can visit an IConstruct.
 
-###### `node`<sup>Required</sup> <a name="node" id="cdk-tagging-aspects.FilteringTagAspect.visit.parameter.node"></a>
+###### `node`<sup>Required</sup> <a name="node" id="@superluminar-io/cdk-tagging-aspects.FilteringTagAspect.visit.parameter.node"></a>
 
 - *Type:* constructs.IConstruct
 
@@ -109,19 +109,19 @@ All aspects can visit an IConstruct.
 
 ## Protocols <a name="Protocols" id="Protocols"></a>
 
-### IResourceFilter <a name="IResourceFilter" id="cdk-tagging-aspects.IResourceFilter"></a>
+### IResourceFilter <a name="IResourceFilter" id="@superluminar-io/cdk-tagging-aspects.IResourceFilter"></a>
 
-- *Implemented By:* <a href="#cdk-tagging-aspects.IResourceFilter">IResourceFilter</a>
+- *Implemented By:* <a href="#@superluminar-io/cdk-tagging-aspects.IResourceFilter">IResourceFilter</a>
 
 #### Methods <a name="Methods" id="Methods"></a>
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdk-tagging-aspects.IResourceFilter.matches">matches</a></code> | Called for every node in the construct tree, including non-CfnResource nodes. |
+| <code><a href="#@superluminar-io/cdk-tagging-aspects.IResourceFilter.matches">matches</a></code> | Called for every node in the construct tree, including non-CfnResource nodes. |
 
 ---
 
-##### `matches` <a name="matches" id="cdk-tagging-aspects.IResourceFilter.matches"></a>
+##### `matches` <a name="matches" id="@superluminar-io/cdk-tagging-aspects.IResourceFilter.matches"></a>
 
 ```typescript
 public matches(node: IConstruct): boolean
@@ -131,7 +131,7 @@ Called for every node in the construct tree, including non-CfnResource nodes.
 
 Implementations should check node type before accessing CfnResource-specific APIs.
 
-###### `node`<sup>Required</sup> <a name="node" id="cdk-tagging-aspects.IResourceFilter.matches.parameter.node"></a>
+###### `node`<sup>Required</sup> <a name="node" id="@superluminar-io/cdk-tagging-aspects.IResourceFilter.matches.parameter.node"></a>
 
 - *Type:* constructs.IConstruct
 
