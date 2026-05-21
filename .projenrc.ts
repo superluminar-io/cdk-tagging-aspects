@@ -1,4 +1,4 @@
-import { awscdk, javascript } from 'projen';
+import { awscdk, javascript, release } from 'projen';
 
 const project = new awscdk.AwsCdkConstructLibrary({
   author: 'superluminar GmbH',
@@ -8,6 +8,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   defaultReleaseBranch: 'main',
   jsiiVersion: '~5.9.0',
   name: '@superluminar-io/cdk-tagging-aspects',
+  releaseTrigger: release.ReleaseTrigger.workflowDispatch(),
   npmAccess: javascript.NpmAccess.PUBLIC,
   npmProvenance: true,
   npmTrustedPublishing: true,

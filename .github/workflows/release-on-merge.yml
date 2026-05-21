@@ -1,0 +1,41 @@
+name: release-on-merge
+# Triggers the release workflow when a release PR is merged to main.
+# Release PRs are identified by their conventional commit message:
+#   fix(release): vX.Y.Z   (patch)
+#   feat(release): vX.Y.Z  (minor)
+#   feat(release)!: vX.Y.Z (major)
+# Use squash merge when merging release PRs so the commit message is preserved.
+on:
+  push:
+    branches: [main]
+concurrency:
+  group: release-on-merge
+  cancel-in-progress: true
+jobs:
+  trigger-release:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Detect release merge
+        id: detect
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%s)
+          echo "commit: $COMMIT_MSG"
+          # Match squash-merged release commits (fix(release): or feat(release): or feat(release)!:)
+          if echo "$COMMIT_MSG" | grep -qE "^(fix|feat)\(release\)(!)?:"; then
+            echo "is_release=true" >> "$GITHUB_OUTPUT"
+          # Match regular merge commits that reference a release branch
+          elif echo "$COMMIT_MSG" | grep -qE "(Merge .* release/v[0-9]|release/v[0-9])"; then
+            echo "is_release=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "is_release=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Trigger release workflow
+        if: steps.detect.outputs.is_release == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run release.yml --ref main

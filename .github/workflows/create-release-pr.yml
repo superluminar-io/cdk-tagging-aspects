@@ -1,0 +1,134 @@
+name: create-release-pr
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: 'Bump type — "auto" detects from commit history (recommended)'
+        required: true
+        default: auto
+        type: choice
+        options: [auto, patch, minor, major]
+concurrency:
+  group: release-pr
+  cancel-in-progress: true
+jobs:
+  create-release-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine bump type and next version
+        id: plan
+        run: |
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          CURRENT=$(node -p "require('./package.json').version")
+
+          if [ -z "$LAST_TAG" ]; then
+            COMMITS=$(git log --pretty="%s" 2>/dev/null || echo "")
+          else
+            COMMITS=$(git log "${LAST_TAG}..HEAD" --pretty="%s")
+          fi
+
+          # Detect recommended bump from conventional commits
+          # Breaking change: BREAKING CHANGE in body, or ! suffix on type
+          if echo "$COMMITS" | grep -qE "(BREAKING CHANGE|^(feat|fix|[a-z]+)!:)"; then
+            AUTO_BUMP="major"
+          elif echo "$COMMITS" | grep -qE "^feat(\(.+\))?: "; then
+            AUTO_BUMP="minor"
+          else
+            AUTO_BUMP="patch"
+          fi
+
+          EFFECTIVE_BUMP="${{ inputs.bump }}"
+          if [ "$EFFECTIVE_BUMP" = "auto" ]; then
+            EFFECTIVE_BUMP="$AUTO_BUMP"
+          fi
+
+          # Calculate next semver
+          MAJOR=$(echo "$CURRENT" | cut -d. -f1)
+          MINOR=$(echo "$CURRENT" | cut -d. -f2)
+          PATCH=$(echo "$CURRENT" | cut -d. -f3)
+          case "$EFFECTIVE_BUMP" in
+            major) NEXT="$((MAJOR+1)).0.0" ;;
+            minor) NEXT="${MAJOR}.$((MINOR+1)).0" ;;
+            patch) NEXT="${MAJOR}.${MINOR}.$((PATCH+1))" ;;
+          esac
+
+          echo "bump=$EFFECTIVE_BUMP" >> "$GITHUB_OUTPUT"
+          echo "auto_bump=$AUTO_BUMP" >> "$GITHUB_OUTPUT"
+          echo "current=$CURRENT" >> "$GITHUB_OUTPUT"
+          echo "next=$NEXT" >> "$GITHUB_OUTPUT"
+
+          # Collect commit log for PR description
+          if [ -z "$LAST_TAG" ]; then
+            LOG=$(git log --pretty="- %s" | head -30)
+          else
+            LOG=$(git log "${LAST_TAG}..HEAD" --pretty="- %s")
+          fi
+          {
+            echo "commit_log<<DELIM"
+            echo "$LOG"
+            echo "DELIM"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Set git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Create release branch
+        run: git checkout -b release/v${{ steps.plan.outputs.next }}
+
+      - name: Create release trigger commit
+        run: |
+          BUMP="${{ steps.plan.outputs.bump }}"
+          VERSION="${{ steps.plan.outputs.next }}"
+          case "$BUMP" in
+            patch) git commit --allow-empty -m "fix(release): v${VERSION}" ;;
+            minor) git commit --allow-empty -m "feat(release): v${VERSION}" ;;
+            major) git commit --allow-empty -m "feat(release)!: v${VERSION}" ;;
+          esac
+
+      - name: Push branch
+        run: git push origin HEAD
+
+      - name: Create pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BUMP="${{ steps.plan.outputs.bump }}"
+          AUTO="${{ steps.plan.outputs.auto_bump }}"
+          CURRENT="${{ steps.plan.outputs.current }}"
+          NEXT="${{ steps.plan.outputs.next }}"
+
+          OVERRIDE_NOTE=""
+          if [ "${{ inputs.bump }}" != "auto" ] && [ "$BUMP" != "$AUTO" ]; then
+            OVERRIDE_NOTE="> ⚠️ Auto-detected **${AUTO}**, overridden to **${BUMP}**."$'\n\n'
+          fi
+
+          cat > /tmp/pr-body.md << EOF
+          ## Release v${NEXT}
+
+          | | |
+          |---|---|
+          | Current version | \`${CURRENT}\` |
+          | Next version | \`${NEXT}\` |
+          | Bump type | **${BUMP}** (auto-detected: **${AUTO}**) |
+
+          ${OVERRIDE_NOTE}### Commits since last release
+
+          ${{ steps.plan.outputs.commit_log }}
+
+          ---
+          *Use **squash merge** to keep commit history clean. Publishing to npm happens automatically after merge.*
+          EOF
+
+          gh pr create \
+            --title "chore: release v${NEXT} (${BUMP})" \
+            --body-file /tmp/pr-body.md \
+            --base main
